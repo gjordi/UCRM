@@ -1,5 +1,13 @@
 #!/usr/bin/env bash
 
+echo "+------------------------------------------------+"
+echo "| UCRM - Complete WISP Management Platform       |"
+echo "|                                                |"
+echo "| https://ucrm.ubnt.com/        (installer v2.3) |"
+echo "+------------------------------------------------+"
+echo ""
+echo "Starting installation."
+
 set -o errexit
 set -o errtrace
 set -o nounset
@@ -86,10 +94,15 @@ UCRM_USERNAME=""
 UCRM_PASSWORD=""
 INSTALL_VERSION="${INSTALL_VERSION:-latest}"
 
+echo "Generating password for postgresql..."
 POSTGRES_PASSWORD="$(LC_CTYPE=C tr -dc "a-zA-Z0-9" < /dev/urandom | fold -w 48 | head -n 1 || true)"
-SECRET="$(LC_CTYPE=C tr -dc "a-zA-Z0-9" < /dev/urandom | fold -w 48 | head -n 1 || true)"
-INSTALL_CLOUD="${INSTALL_CLOUD:-false}"
+echo "done."
 
+echo "Generating secret..."
+SECRET="$(LC_CTYPE=C tr -dc "a-zA-Z0-9" < /dev/urandom | fold -w 48 | head -n 1 || true)"
+echo "done."
+
+INSTALL_CLOUD="${INSTALL_CLOUD:-false}"
 GITHUB_REPOSITORY="${GITHUB_REPOSITORY:-Ubiquiti-App/UCRM/master}"
 
 if [[ -f "${UCRM_PATH}/docker-compose.env" ]]; then
@@ -114,6 +127,17 @@ ALTERNATIVE_PORT_HTTP="${ALTERNATIVE_PORT_HTTP:-8080}"
 ALTERNATIVE_PORT_SUSPENSION="${ALTERNATIVE_PORT_SUSPENSION:-8081}"
 ALTERNATIVE_PORT_HTTPS="${ALTERNATIVE_PORT_HTTPS:-8443}"
 ALTERNATIVE_PORT_NETFLOW="${ALTERNATIVE_PORT_NETFLOW:-2056}"
+
+echo "NETWORK_SUBNET: $NETWORK_SUBNET"
+echo "NETWORK_SUBNET_INTERNAL: $NETWORK_SUBNET_INTERNAL"
+echo "PORT_HTTP: $PORT_HTTP"
+echo "PORT_SUSPENSION: $PORT_SUSPENSION"
+echo "PORT_HTTPS: $PORT_HTTPS"
+echo "PORT_NETFLOW: $PORT_NETFLOW"
+echo "ALTERNATIVE_PORT_HTTP: $ALTERNATIVE_PORT_HTTP"
+echo "ALTERNATIVE_PORT_SUSPENSION: $ALTERNATIVE_PORT_SUSPENSION"
+echo "ALTERNATIVE_PORT_HTTPS: $ALTERNATIVE_PORT_HTTPS"
+echo "ALTERNATIVE_PORT_NETFLOW: $ALTERNATIVE_PORT_NETFLOW"
 
 version_equal_or_newer() {
     if [[ "$1" == "$2" ]]; then return 0; fi
