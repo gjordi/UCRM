@@ -89,8 +89,8 @@ UCRM_USERNAME=""
 UCRM_PASSWORD=""
 INSTALL_VERSION="${INSTALL_VERSION:-latest}"
 
-POSTGRES_PASSWORD="$(tr -cd '[:alnum:]' < /dev/urandom | fold -w48 | head -n1)"
-SECRET="$(tr -cd '[:alnum:]' < /dev/urandom | fold -w48 | head -n1)"
+POSTGRES_PASSWORD="$(date +%s | sha256sum | base64 | head -c 48 ; echo)"
+SECRET="$(date +%s | sha256sum | base64 | head -c 48 ; echo)"
 INSTALL_CLOUD="${INSTALL_CLOUD:-false}"
 
 GITHUB_REPOSITORY="${GITHUB_REPOSITORY:-Ubiquiti-App/UCRM/master}"
