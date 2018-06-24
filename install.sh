@@ -7,7 +7,7 @@ set -o errexit
 set -o errtrace
 set -o nounset
 set -o pipefail
-set -o xtrace
+#set -o xtrace
 
 SECURE_FIRST_LOGIN="false"
 NO_AUTO_UPDATE="false"
@@ -89,8 +89,8 @@ UCRM_USERNAME=""
 UCRM_PASSWORD=""
 INSTALL_VERSION="${INSTALL_VERSION:-latest}"
 
-POSTGRES_PASSWORD="$(LC_CTYPE=C tr -dc "a-zA-Z0-9" < /dev/urandom | fold -w 48 | head -c 128 || true)"
-SECRET="$(LC_CTYPE=C tr -dc "a-zA-Z0-9" < /dev/urandom | fold -w 48 | head -c 128 || true)"
+POSTGRES_PASSWORD="$(tr -cd '[:alnum:]' < /dev/urandom | fold -w48 | head -n1)"
+SECRET="$(tr -cd '[:alnum:]' < /dev/urandom | fold -w48 | head -n1)"
 INSTALL_CLOUD="${INSTALL_CLOUD:-false}"
 
 GITHUB_REPOSITORY="${GITHUB_REPOSITORY:-Ubiquiti-App/UCRM/master}"
